@@ -1,0 +1,30 @@
+extends ../../layouts/sign
+
+block content
+  h5 Create account
+  if errors
+    p= errors.title
+
+  form(action='/auth/register' method='POST')
+    .form-group.input-group-lg
+      input.form-control(type='text' placeholder='Firstname' name="firstName" required='' autofocus='')
+      if errors
+        p= errors.fistName
+    .form-group.input-group-lg
+      input.form-control(type='text' placeholder='Lastname' name="lastName" required='')
+      if errors
+        p= errors.lastName
+    .form-group.input-group-lg
+      input.form-control(type='email' placeholder='Email' name="email" required='')
+      if errors
+        p= errors.email
+    .form-group.input-group-lg
+      input.form-control(type='password' placeholder='Password' name="password" required='')
+      if errors
+        p= errors.password
+    .form-group.input-group-lg
+      #recaptcha-container
+    button.btn.btn-primary.btn-lg.btn-block Register
+    hr
+    p.text-muted Already have an account?
+    a.btn.btn-outline-light.btn-sm(href='/auth') Sign in!
