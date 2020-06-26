@@ -5,7 +5,7 @@ block content
   if errors
     p= errors.title
 
-  form(action='/auth/register' method='POST')
+  form(action='/auth/email-register' method='POST')
     .form-group.input-group-lg
       input.form-control(type='text' placeholder='Firstname' name="firstName" required='' autofocus='')
       if errors
@@ -27,4 +27,4 @@ block content
     button.btn.btn-primary.btn-lg.btn-block Register
     hr
     p.text-muted Already have an account?
-    a.btn.btn-outline-light.btn-sm(href='/auth') Sign in!
+    a.btn.btn-outline-light.btn-sm(href='/auth/login-email') Sign in!

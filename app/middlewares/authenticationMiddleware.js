@@ -1,5 +1,6 @@
 const { knex } = require("../../database/pgConfig");
 const { firebase, admin } = require("../../firebase/fbConfig");
+const { json } = require("express");
 
 const validateRegistration = async (req, res, next) => {
     let errors = { title: "Please check again" };
@@ -34,21 +35,20 @@ const validateRegistration = async (req, res, next) => {
     return next();
 }
 
-const requireLogin = async (req, res, next) => {
-    let user = firebase.auth().currentUser;
-    if (user) return next();
-    req.flash("titleLogin", "You must login first");
-    return res.redirect("/auth");
+const verifyToken = async (req, res, next) => {
+    try {
+        await admin.auth().verifyIdToken(req.headers.token);
+    } catch (e) {
+        return res.json({
+            result: "not OK",
+            error: "Lỗi xác thực",
+        })
+    }
+    return next()
 }
 
-const hasLogined = async (req, res, next) => {
-    let user = firebase.auth().currentUser;
-    if (!user) return next();
-    return res.send("You have logined,go to /auth/logout to log out");
-}
 
 module.exports = {
     validateRegistration,
-    hasLogined,
-    requireLogin,
+    verifyToken,
 }

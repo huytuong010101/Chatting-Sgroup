@@ -6,21 +6,18 @@ block content
 
     form#login-phone-number(method='POST')
       .form-group.input-group-lg
-        input.form-control(type='text' name='firstName' placeholder='Firstname' required='' autofocus='')
-      .form-group.input-group-lg
-        input.form-control(type='text' name='lastName' placeholder='Lastname' required='')
-      .form-group.input-group-lg
-        input.form-control(type='text' name='phoneNumber' placeholder='Phone number' required='' autofocus='')
+        input.form-control(type='text' id="phoneNumber" name='phoneNumber' placeholder='Phone number' required='' autofocus='')
         #recaptcha-container
-      button.btn.btn-primary.btn-lg.btn-block(type='submit') Sign in
+      button.btn.btn-primary.btn-lg.btn-block(type='button' id="btnSubmit") Send me the code
 
   div#login-phone-step2
-    h5 Verify code
+    br
+    h5 You had code? Login now
 
     form#phone-number-verify(method='POST')
       .form-group.input-group-lg
-        input.form-control(type='text' name='code' placeholder='Code' required='' autofocus='')
-      button.btn.btn-primary.btn-lg.btn-block(type='submit') Verify
+        input.form-control(type='text' id="code" name='code' placeholder='You already received code? Login now' required='' autofocus='')
+      button.btn.btn-primary.btn-lg.btn-block(type='button' id="btnLogin") Login
 
   hr
   p.text-muted Login with your social media account.

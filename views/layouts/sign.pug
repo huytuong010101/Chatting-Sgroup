@@ -4,7 +4,8 @@ head
   meta(name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0')
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
   title Soho - Chat and Discussion Platform
-
+  script(src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous')
+  script(src='/dist/js/requireNotLogin.js')
   link(rel='icon' href='/dist/images/favicon.png' type='image/png')
   link(rel='stylesheet' href='/dist/css/soho.min.css')
   link(rel='stylesheet' href='/dist/css/style.css')
@@ -40,24 +41,15 @@ body.form-membership
 
     block content
 
-  script(src='https://code.jquery.com/jquery-3.4.1.min.js' integrity='sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=' crossorigin='anonymous')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
   script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
   script(src='https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js')
   script(src='https://www.gstatic.com/firebasejs/6.6.0/firebase-auth.js')
   script(src='https://www.gstatic.com/firebasejs/6.6.0/firebase-firestore.js')
+  <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
+  script(src="https://unpkg.com/sweetalert/dist/sweetalert.min.js")
   script(src='/dist/js/soho.min.js')
-  script.
-    const firebaseConfig = {
-            apiKey: "AIzaSyBjwkMO_BLJBogNLSM1A1NhFykiYrQppTY",
-            authDomain: "chattingsgroup.firebaseapp.com",
-            databaseURL: "https://chattingsgroup.firebaseio.com",
-            projectId: "chattingsgroup",
-            storageBucket: "chattingsgroup.appspot.com",
-            messagingSenderId: "836225984572",
-            appId: "1:836225984572:web:7b91aab518aa5152ebfb39"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-  script(src='/dist/js/main.js')
+  script(src='/dist/js/fbConfig.js')
+  script(src='/dist/js/phoneLogin.js')
+  script(src='/dist/js/emailLogin.js')
