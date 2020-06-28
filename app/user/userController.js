@@ -16,13 +16,20 @@ export default class UserController {
     }
     //function use to update current user
     async updateMyInfo(req, res) {
+
         const user = jwtDecode(req.headers.token);
-        await users.update({ "uid": user.user_id }, {
+        const updateData = {
             fullname: req.body.fullname,
             phone: req.body.phone,
             description: req.body.description,
             address: req.body.address,
-        })
+        }
+        if (req.file) {
+            updateData.avatar = "avatar/" + req.file.filename
+        }
+        console.log("avatar:")
+        console.log(req.file)
+        await users.update({ "uid": user.user_id }, updateData)
         return res.json({
             result: "OK",
         })

@@ -16,4 +16,8 @@ router.route("/accept")
     .put(authMiddleware.verifyToken, friendController.acceptRequest)
 router.route("/delete-request")
     .delete(authMiddleware.verifyToken, friendController.deleteRequest)
+router.route("/unfriend")
+    .delete(authMiddleware.verifyToken, friendController.unfriend)
+router.route("/get-profile-of-friend")
+    .get(authMiddleware.verifyToken, friendController.getProfileOfFriend)
 export default router;

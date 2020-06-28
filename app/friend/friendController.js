@@ -50,7 +50,7 @@ export default class FriendController {
     //get all friend requests
     async getFriendRequests(req, res) {
         const user = jwtDecode(req.headers.token);
-        let requestList = await friends.allRequestOf(user.user_id)
+        const requestList = await friends.allRequestOf(user.user_id)
         console.log("all friend request")
         console.log(requestList)
         return res.json(requestList)
@@ -101,6 +101,25 @@ export default class FriendController {
             })
         }
 
+    }
+    //unfriend
+    async unfriend(req, res) {
+        const id = req.body.id;
+        const user = jwtDecode(req.headers.token);
+        try {
+            await friends.unfriend(user.user_id, id);
+            return res.json({ result: "OK" });
+        } catch {
+            return res.json({ result: "not OK" })
+        }
+    }
+    //get profile to show my friend
+    async getProfileOfFriend(req, res) {
+        const id = req.query.id;
+        const user = jwtDecode(req.headers.token);
+        const profile = await friends.getInfoIfFriend(user.user_id, id)
+        console.log(profile)
+        return res.json(profile)
     }
 
 }

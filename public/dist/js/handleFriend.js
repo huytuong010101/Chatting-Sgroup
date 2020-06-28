@@ -29,7 +29,7 @@ const loadAllFriend = () => {
         success: (response) => {
             $("#list-friend").html("");
             response.forEach(item => {
-                let str = `<li class="list-group-item"><div><figure class="avatar"><img class="rounded-circle" src="${item.avatar}"></figure></div><div class="users-list-body"><h5>${item.fullname}</h5><p>Lorem ipsum dolor sitsdc sdcsdc sdcsdcs</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-142px, 22px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#">Open</a><a class="dropdown-item" href="/user/${item.userB}" data-navigation-target="contact-information">Profile</a><a class="dropdown-item" href="#">Add to archive</a><a class="dropdown-item" href="#">Delete</a></div></div></div></div></li>`
+                let str = `<li class="list-group-item"><div><figure class="avatar"><img class="rounded-circle" src="${item.avatar}"></figure></div><div class="users-list-body"><h5>${item.fullname}</h5><p>${item.description}</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-142px, 22px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#">Open</a><a class="dropdown-item" data-id="${item.userB}" onclick="getProfile(event)" data-navigation-target="contact-information">Profile</a><a class="dropdown-item" data-id="${item.userB}" onclick="unfriend(event)">Unfriend</a></div></div></div></div></li>`
                 $("#list-friend").append(str)
             });
             if (response.length == 0) $("#list-friend").append("<h6 class='text-warning text-center'>You have no friend</h6>")
@@ -73,11 +73,11 @@ const acceptRequest = (event) => {
         },
         success: (response) => {
             if (response.result == "OK") {
-                swal("Thành công", "Bây giờ 2 người đã có thể tán nhau", "success");
+                swal("Success", "You can talk to each other", "success");
                 loadAllRequest();
                 loadAllFriend();
             } else {
-                swal("Lỗi", "Lỗi rồi ông eii", "error");
+                swal("Error", "Something were wrong", "error");
             }
         }
     })
@@ -96,15 +96,59 @@ const deleteRequest = (event) => {
         },
         success: (response) => {
             if (response.result == "OK") {
-                swal("Thành công", "Đã xóa yêu cầu kết bạn nè. Bạn thật chảnh", "success");
+                swal("Success", "You removed a friend request", "success");
                 loadAllRequest();
                 loadAllFriend();
             } else {
-                swal("Lỗi", "Lỗi rồi ông eii", "error");
+                swal("Error", "SOmething were wrong", "error");
             }
         }
     })
 
 }
 
+const unfriend = (event) => {
+    $.ajax({
+        type: "DELETE",
+        url: "/friend/unfriend",
+        headers: {
+            token: localStorage.getItem("authToken"),
+        },
+        data: {
+            id: event.target.dataset.id,
+        },
+        success: (response) => {
+            if (response.result == "OK") {
+                swal("Success", "You removed your friend", "success");
+                loadAllFriend();
+            } else {
+                swal("Error", "Something were wrong", "error");
+            }
+        }
+    })
+
+}
+
+const getProfile = (event) => {
+    console.log(event.target.dataset.id)
+    $.ajax({
+        type: "GET",
+        url: "/friend/get-profile-of-friend",
+        headers: {
+            token: localStorage.getItem("authToken"),
+        },
+        data: {
+            id: event.target.dataset.id,
+        },
+        success: (response) => {
+            $("#profileAvatar").attr("src", response.avatar)
+            $("#profileFullname").text(response.fullname)
+            $("#profileAbout").text(response.description)
+            $("#profilePhone").text(response.phone)
+            $("#profileAddress").text(response.address)
+            $("#profileEmail").text(response.email)
+        }
+    })
+
+}
 

@@ -9,19 +9,18 @@
       .sidebar-body(tabindex='6' style='overflow: hidden; outline: none;')
         .pl-4.pr-4.text-center
           figure.avatar.avatar-state-danger.avatar-xl.mb-4
-            img.rounded-circle(src='dist/images/women_avatar5.jpg')
-          h5.text-primary Frans Hanscombe
+            img#profileAvatar.rounded-circle(src='https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132484366.jpg')
+          h5.text-primary#profileFullname
           p.text-muted Last seen: Today
         hr
         .pl-4.pr-4
           h6 About
-          p.text-muted
-            | I love reading, traveling and discovering new things. You need to be
-            | happy in life.
+          p.text-muted#profileAbout
+
         hr
         .pl-4.pr-4
           h6 Phone
-          p.text-muted (555) 555 55 55
+          p.text-muted#profilePhone
         hr
         .pl-4.pr-4
           h6 Media
@@ -56,13 +55,13 @@
                       i.fa.fa-file-text-o
         hr
         .pl-4.pr-4
-          h6 City
-          p.text-muted Germany / Berlin
+          h6 Address
+          p.text-muted#profileAddress
         hr
         .pl-4.pr-4
-          h6 Website
+          h6 Email
           p
-            a(href='#') www.franshanscombe.com
+            a#profileEmail(href='#')
         hr
         .pl-4.pr-4
           h6 Social Links

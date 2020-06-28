@@ -19,15 +19,18 @@ const loadMyProfile = () => {
 loadMyProfile()
 
 const updateInfo = (event) => {
-    const data = {
-        fullname: $("#fullname").val(),
-        phone: $("#phone").val(),
-        description: $("#about-text").val(),
-        address: $("#address").val(),
-    }
+    const data = new FormData();
+    data.append("fullname", $("#fullname").val())
+    data.append("phone", $("#phone").val())
+    data.append("description", $("#about-text").val())
+    data.append("address", $("#address").val())
+    const avatar = $('#newAvatar')[0].files[0];
+    if (avatar) data.append("avatar", avatar)
     $.ajax({
-        type: "PUT",
+        type: "POST",
         url: "/user/update-info",
+        contentType: false,
+        processData: false,
         headers: {
             token: localStorage.getItem("authToken"),
         },
