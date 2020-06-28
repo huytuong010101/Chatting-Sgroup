@@ -1,17 +1,18 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const session = require('express-session')
-const flash = require('connect-flash');
-const methodOverride = require('method-override');
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import session from 'express-session'
+import flash from 'connect-flash';
+import methodOverride from 'method-override';
+const __dirname = path.resolve();
 const app = express();
 //import router
-const authRouter = require('./routes/authenticationRouter');
-const indexRouter = require('./routes/indexRouter');
-const friendRouter = require('./routes/friendRouter');
-const userRouter = require('./routes/userRouter');
+import authRouter from './app/authentication/authenticationRouter.js';
+import indexRouter from './routes/indexRouter.js';
+import friendRouter from './app/friend/friendRouter.js';
+import userRouter from './app/user/userRouter.js';
 // overide method
 // override with different headers; last one takes precedence
 app.use(methodOverride('X-HTTP-Method')); //          Microsoft
@@ -53,4 +54,4 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

@@ -1,7 +1,7 @@
-require("firebase/auth");
-const firebase = require('firebase')
-const admin = require('firebase-admin')
-const serviceAccount = require("./serviceAccountKey.json");
+import "firebase/auth/dist/index.cjs.js"
+import firebase from 'firebase'
+import admin from 'firebase-admin'
+import serviceAccount from "./serviceAccountKey.js";
 const firebaseConfig = {
     apiKey: "AIzaSyBjwkMO_BLJBogNLSM1A1NhFykiYrQppTY",
     authDomain: "chattingsgroup.firebaseapp.com",
@@ -16,4 +16,4 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://chattingsgroup.firebaseio.com",
 });
-module.exports = { firebase, admin };
+export { admin, firebase }

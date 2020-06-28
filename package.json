@@ -2,8 +2,9 @@
   "name": "chatting",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www.js"
   },
   "dependencies": {
     "aws-sdk": "^2.705.0",

@@ -4,10 +4,12 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('chatting:server');
-var http = require('http');
-require("dotenv").config()
+import app from '../app.js';
+import d from 'debug';
+const debug = d('chatting:server')
+import http from 'http';
+import dotenv from "dotenv"
+dotenv.config()
 
 /**
  * Get port from environment and store in Express.

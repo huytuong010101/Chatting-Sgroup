@@ -1,4 +1,4 @@
-{
+export default {
   "type": "service_account",
   "project_id": "chattingsgroup",
   "private_key_id": "dcfa4cc286db632a4624067291bcc162d6704bce",

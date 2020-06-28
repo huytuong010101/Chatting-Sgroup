@@ -1,5 +1,7 @@
-require("dotenv").config()
-const knex = require('knex')({
+import dotenv from 'dotenv'
+dotenv.config()
+import knex from "knex"
+export default knex({
     client: 'postgresql',
     connection: {
         host: process.env.DB_HOST,
@@ -10,6 +12,3 @@ const knex = require('knex')({
     }
 });
 
-module.exports = {
-    knex,
-}

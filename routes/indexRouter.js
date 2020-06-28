@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 router.route("/")
@@ -6,4 +6,4 @@ router.route("/")
         return res.render("app/conversation/index");
     })
 
-module.exports = router;
+export default router;
