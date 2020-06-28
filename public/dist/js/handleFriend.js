@@ -12,11 +12,13 @@ const loadAllRequest = () => {
                 let str = `<ul class="list-group list-group-flush users-list"><li class="list-group-item"><div class="users-list-body"><h5><figure class="avatar"><img class="rounded-circle" src="${item.avatar}"></figure>  ${item.fullname}</h5><p>${item.message}</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="/user/${item.userB}">View profile</a><a class="dropdown-item" onclick="acceptRequest(event)" data-id=${item.userB}>Accept</a><a class="dropdown-item" onclick="deleteRequest(event)" data-id=${item.userB}>Delete</a></div></div></div></div></li></ul>`
                 $("#list-request").append(str)
             });
+            if (response.length == 0) $("#list-request").append("<h6 class='text-warning text-center'>You have no friend request</h6>")
         }
 
     })
 }
 loadAllRequest();
+//load all friend
 const loadAllFriend = () => {
     $.ajax({
         type: "GET",
@@ -30,6 +32,7 @@ const loadAllFriend = () => {
                 let str = `<li class="list-group-item"><div><figure class="avatar"><img class="rounded-circle" src="${item.avatar}"></figure></div><div class="users-list-body"><h5>${item.fullname}</h5><p>Lorem ipsum dolor sitsdc sdcsdc sdcsdcs</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-142px, 22px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#">Open</a><a class="dropdown-item" href="/user/${item.userB}" data-navigation-target="contact-information">Profile</a><a class="dropdown-item" href="#">Add to archive</a><a class="dropdown-item" href="#">Delete</a></div></div></div></div></li>`
                 $("#list-friend").append(str)
             });
+            if (response.length == 0) $("#list-friend").append("<h6 class='text-warning text-center'>You have no friend</h6>")
         }
 
     })

@@ -9,7 +9,7 @@ $(document).ready(() => {
             swal("Login failed!", "Please check info again", "error");
             return;
         }
-        swal("OK!", "Gooood", "success");
+        swal("OK!", "Login success - Please wait a minutes", "success");
         //save data to localStorage
         const token = await firebase.auth().currentUser.getIdToken(true);
         localStorage.setItem("authToken", token);

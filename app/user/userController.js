@@ -20,7 +20,6 @@ export default class UserController {
         await users.update({ "uid": user.user_id }, {
             fullname: req.body.fullname,
             phone: req.body.phone,
-            email: req.body.email,
             description: req.body.description,
             address: req.body.address,
         })

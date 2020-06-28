@@ -1,11 +1,16 @@
 import knex from "../../database/pgConfig.js";
 import { firebase, admin } from "../../firebase/fbConfig.js";
 import jwtDecode from 'jwt-decode';
+import Friend from "./friendModel.js"
+import User from "../user/userModel.js"
+
+const friends = new Friend;
+const users = new User;
 
 export default class FriendController {
-
+    //send new request
     async sendRequest(req, res) {
-        const info = await knex("users").where("email", "=", req.body.email).first()
+        const info = await users.get({ "email": req.body.email })
         const token = req.headers.token;
         const user = jwtDecode(token);
         if (!info || info.email == user.email) {
@@ -14,12 +19,9 @@ export default class FriendController {
                 error: "Email không khớp",
             })
         }
-        const isExist = await knex("friends").where("userA", "=", user.user_id).andWhere("userB", "=", info.uid).first()
+        const isExist = await friends.get({ "userA": user.user_id, "userB": info.uid })
         if (!isExist) {
-            await knex("friends").insert([
-                { userA: user.user_id, userB: info.uid, relationship: 0, message: req.body.message, },
-                { userA: info.uid, userB: user.user_id, relationship: 1, message: req.body.message, },
-            ])
+            await friends.addFriendRequest(user.user_id, info.uid, req.body.message)
             return res.json({
                 result: "OK",
                 message: "Đã add vào",
@@ -45,65 +47,50 @@ export default class FriendController {
             error: error,
         })
     }
-
+    //get all friend requests
     async getFriendRequests(req, res) {
         const user = jwtDecode(req.headers.token);
-        let requestList = await knex("friends")
-            .select("fullname", "userB", "message", "avatar")
-            .where("userA", "=", user.user_id)
-            .andWhere("relationship", "=", 1)
-            .leftJoin('users', 'friends.userB', 'users.uid')
+        let requestList = await friends.allRequestOf(user.user_id)
+        console.log("all friend request")
         console.log(requestList)
         return res.json(requestList)
     }
-
+    //get all friends
     async getAllFriends(req, res) {
         const user = jwtDecode(req.headers.token);
-        let friendList = await knex("friends")
-            .select("fullname", "userB", "avatar")
-            .where("userA", "=", user.user_id)
-            .andWhere("relationship", "=", 2)
-            .leftJoin('users', 'friends.userB', 'users.uid')
+        let friendList = await friends.allFriendsOf(user.user_id)
         console.log(friendList)
         return res.json(friendList)
     }
-
+    //accept friend request
     async acceptRequest(req, res) {
         const id = req.body.id
         const user = jwtDecode(req.headers.token);
         console.log(id)
         console.log(user.user_id)
         try {
-            await knex("friends")
-                .where({ userA: user.user_id, userB: id, relationship: 1 })
-                .orWhere({ userB: user.user_id, userA: id, relationship: 0 })
-                .update({
-                    relationship: 2,
-                })
+            await friends.changeToAccept(user.user_id, id);
             return res.json({
                 result: "OK",
             })
         } catch {
             return res.json({
                 result: "not OK",
-                error: "Loi ko xac dinh",
+                error: "Something were wrong",
             })
         }
 
 
 
     }
-
+    //delete friend request
     async deleteRequest(req, res) {
         const id = req.body.id
         const user = jwtDecode(req.headers.token);
         console.log(id)
         console.log(user.user_id)
         try {
-            await knex("friends")
-                .where({ userA: user.user_id, userB: id, relationship: 1 })
-                .orWhere({ userB: user.user_id, userA: id, relationship: 0 })
-                .del()
+            await friends.deleteRequest(user.user_id, id)
             return res.json({
                 result: "OK",
             })

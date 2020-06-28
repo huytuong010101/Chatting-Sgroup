@@ -8,12 +8,20 @@ import User from "../user/userModel.js"
 const user = new User;
 
 export default class AuthController {
+    //render some page
     renderEmailLoginPage(req, res) {
         return res.render("app/login", { title: req.flash("titleLogin") });
     }
     renderEmailRegisterPage = (req, res) => {
         return res.render("app/auth/register-email", { errors: req.flash("register-errors")[0] });
     }
+    renderPhoneLoginPage(req, res) {
+        return res.render("app/login-phone-number");
+    }
+    renderRegisterPage(req, res) {
+        return res.render("app/auth/register");
+    }
+    //register by email
     async handleRegister(req, res) {
         try {
             let infoUser = await admin.auth().createUser({
@@ -40,25 +48,7 @@ export default class AuthController {
         req.flash("titleLogin", "Resgistration is success");
         return res.redirect("/auth/login-email");
     }
-    async handleLogout(req, res) {
-        await firebase.auth().signOut();
-        req.flash("titleLogin", "Ok, you can login again");
-        return res.redirect("/auth/login-email");
-    }
-    renderPhoneLoginPage(req, res) {
-        return res.render("app/login-phone-number");
-    }
-    renderRegisterPage(req, res) {
-        return res.render("app/auth/register");
-    }
-    async verifyToken(token) {
-        try {
-            await admin.auth().verifyIdToken(token);
-        } catch (e) {
-            return false
-        }
-        return true
-    }
+    //register by phone
     async addPhoneAccount(req, res) {
         let token = req.headers.token;
         let user = await jwtDecode(token)

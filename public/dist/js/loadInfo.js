@@ -22,7 +22,6 @@ const updateInfo = (event) => {
     const data = {
         fullname: $("#fullname").val(),
         phone: $("#phone").val(),
-        email: $("#myEmail").val(),
         description: $("#about-text").val(),
         address: $("#address").val(),
     }
