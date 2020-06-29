@@ -1,8 +1,13 @@
 import knex from "../../database/pgConfig.js";
 import { firebase, admin } from "../../firebase/fbConfig.js";
+import cloudinary from "cloudinary"
 import jwtDecode from 'jwt-decode';
+import path from "path"
+import fs from "fs"
 import User from "./userModel.js"
-
+import upload from "../../config/uploadConfig.js"
+//upload file
+const __dirname = path.resolve();
 const users = new User;
 
 export default class UserController {
@@ -16,7 +21,6 @@ export default class UserController {
     }
     //function use to update current user
     async updateMyInfo(req, res) {
-
         const user = jwtDecode(req.headers.token);
         const updateData = {
             fullname: req.body.fullname,
@@ -25,10 +29,12 @@ export default class UserController {
             address: req.body.address,
         }
         if (req.file) {
-            updateData.avatar = "avatar/" + req.file.filename
+            const pathFile = __dirname + "/public/avatar/" + req.file.filename
+            await upload.uploader.upload(pathFile, function (error, result) {
+                if (result) updateData.avatar = result.url
+                fs.unlinkSync(pathFile)
+            });
         }
-        console.log("avatar:")
-        console.log(req.file)
         await users.update({ "uid": user.user_id }, updateData)
         return res.json({
             result: "OK",

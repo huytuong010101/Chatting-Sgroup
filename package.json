@@ -9,6 +9,7 @@
   "dependencies": {
     "aws-sdk": "^2.705.0",
     "bcrypt": "^5.0.0",
+    "cloudinary": "^1.22.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

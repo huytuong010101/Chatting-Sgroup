@@ -1,4 +1,5 @@
 const loadMyProfile = () => {
+    $("#newAvatar").val("");
     $.ajax({
         type: "GET",
         url: "/user/get-info",
@@ -19,6 +20,9 @@ const loadMyProfile = () => {
 loadMyProfile()
 
 const updateInfo = (event) => {
+    //show loading img
+    $("#loading-img").css("display", "block")
+    //
     const data = new FormData();
     data.append("fullname", $("#fullname").val())
     data.append("phone", $("#phone").val())
@@ -36,6 +40,7 @@ const updateInfo = (event) => {
         },
         data: data,
         success: (response) => {
+            $("#loading-img").css("display", "none")
             if (response.result == "OK") {
                 swal("Success", "You infomation was updated", "success");
                 loadMyProfile();
@@ -43,3 +48,10 @@ const updateInfo = (event) => {
         }
     })
 }
+//preview avatar
+$("#newAvatar").change((event) => {
+    $("#avatar").attr("src", URL.createObjectURL(event.target.files[0]))
+    document.getElementById("avatar").onload = () => {
+        URL.revokeObjectURL(document.getElementById("avatar").src) // free memory
+    }
+})

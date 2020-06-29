@@ -17,3 +17,11 @@ body.form-membership {
 .register-option .btn {
   margin-bottom: 15px;
 }
+.loading-img{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  display: none;
+}
