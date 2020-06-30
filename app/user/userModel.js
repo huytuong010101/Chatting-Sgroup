@@ -1,6 +1,6 @@
 import knex from "../../database/pgConfig.js";
 
-export default class Friends {
+export default class Users {
     async all() {
         return await knex("users").select("uid", "fullname", "avatar", "email", "phone", "description", "address", "birthday")
     }

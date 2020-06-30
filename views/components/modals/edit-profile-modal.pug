@@ -41,6 +41,7 @@
                       span.input-group-text
                         i.ti-map-alt
                     input#address.form-control(type='text')
+                  p.error.text-danger.text-center#addressError
                 .form-group
                   label.col-form-label(for='phone') Phone
                   .input-group
@@ -48,13 +49,15 @@
                       span.input-group-text
                         i.ti-mobile
                     input#phone.form-control(type='text' placeholder='(555) 555 55 55')
+                  p.error.text-danger.text-center#phoneError
                 .form-group
                   label.col-form-label(for='myEmail') Email
                   .input-group
                     .input-group-prepend
                       span.input-group-text
                         i.ti-link
-                    input#myEmail.form-control(type='text', readonly="")
+                    input#myEmail.form-control(type='text')
+                  p.error.text-danger.text-center#emailError
             #about.tab-pane(role='tabpanel')
               form(action='')
                 .form-group
@@ -62,6 +65,7 @@
                     | Write a few words that describe
                     | you
                   textarea#about-text.form-control
+                  p.error.text-danger.text-center#descriptionError
                 .custom-control.custom-checkbox
                   input#customCheck1.custom-control-input(type='checkbox' checked='')
                   label.custom-control-label(for='customCheck1') View profile

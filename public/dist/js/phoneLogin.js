@@ -1,4 +1,3 @@
-
 $(document).ready(async () => {
     firebase.auth().languageCode = 'it';
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');

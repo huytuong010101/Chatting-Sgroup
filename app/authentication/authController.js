@@ -3,9 +3,9 @@ import { firebase, admin } from "../../firebase/fbConfig.js";
 import bcrypt from 'bcrypt';
 const saltRounds = 10;
 import jwtDecode from 'jwt-decode';
-import User from "../user/userModel.js"
+import Users from "../user/userModel.js"
 
-const user = new User;
+const user = new Users;
 
 export default class AuthController {
     //render some page
@@ -51,12 +51,12 @@ export default class AuthController {
     //register by phone
     async addPhoneAccount(req, res) {
         let token = req.headers.token;
-        let user = await jwtDecode(token)
-        isExist = await user.get({ "uid": user.user_id })
+        let currentUser = await jwtDecode(token)
+        const isExist = await user.get({ "uid": currentUser.user_id })
         if (!isExist) {
             await user.insert({
-                uid: user.user_id,
-                phone: user.phone_number,
+                uid: currentUser.user_id,
+                phone: currentUser.phone_number,
                 password: "notPassword",
                 avatar: 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132484366.jpg',
             })

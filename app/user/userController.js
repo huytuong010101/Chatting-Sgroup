@@ -1,6 +1,4 @@
-import knex from "../../database/pgConfig.js";
 import { firebase, admin } from "../../firebase/fbConfig.js";
-import cloudinary from "cloudinary"
 import jwtDecode from 'jwt-decode';
 import path from "path"
 import fs from "fs"
@@ -27,18 +25,41 @@ export default class UserController {
             phone: req.body.phone,
             description: req.body.description,
             address: req.body.address,
+            email: req.body.email,
+        }
+        const firebaseData = {
+            email: req.body.email ? req.body.email : null,
+            phoneNumber: req.body.phone ? req.body.phone : null,
+            displayName: req.body.fullname,
+        }
+        if (req.body.email != user.email) {
+            firebaseData.emailVerified = false
+            updateData.email_verified = false
         }
         if (req.file) {
             const pathFile = __dirname + "/public/avatar/" + req.file.filename
             await upload.uploader.upload(pathFile, function (error, result) {
-                if (result) updateData.avatar = result.url
+                if (result) {
+                    updateData.avatar = result.url
+                    firebaseData.photoURL = result.url
+                }
                 fs.unlinkSync(pathFile)
             });
         }
-        await users.update({ "uid": user.user_id }, updateData)
-        return res.json({
-            result: "OK",
-        })
+        try {
+            await admin.auth().updateUser(user.user_id, firebaseData)
+            await users.update({ "uid": user.user_id }, updateData)
+            return res.json({
+                result: "OK",
+            })
+        } catch (err) {
+            console.log(err.message)
+            return res.json({
+                result: "not OK",
+                error: "Bug when insert to DB",
+            })
+        }
+
     }
 }
 
