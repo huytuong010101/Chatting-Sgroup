@@ -1,5 +1,5 @@
-import knex from "../../database/pgConfig.js";
-import { firebase, admin } from "../../firebase/fbConfig.js";
+import knex from "../database/pgConfig.js";
+import { firebase, admin } from "../firebase/fbConfig.js";
 import json from "express";
 export default class AuthMiddleware {
     async validateRegistration(req, res, next) {
@@ -39,6 +39,8 @@ export default class AuthMiddleware {
         try {
             await admin.auth().verifyIdToken(req.headers.token);
         } catch (e) {
+            console.log("Wrong token--")
+            console.log(e)
             return res.json({
                 result: "not OK",
                 error: "Lỗi xác thực",

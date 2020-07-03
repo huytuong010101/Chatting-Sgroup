@@ -2,7 +2,7 @@ import { firebase, admin } from "../../firebase/fbConfig.js";
 import jwtDecode from 'jwt-decode';
 import path from "path"
 import fs from "fs"
-import User from "./userModel.js"
+import User from "./userRepository.js"
 import upload from "../../config/uploadConfig.js"
 //upload file
 const __dirname = path.resolve();
@@ -13,8 +13,6 @@ export default class UserController {
     async getMyInfo(req, res) {
         const user = jwtDecode(req.headers.token);
         const myUser = await users.get({ uid: user.user_id })
-        console.log("Current user:")
-        console.log(myUser)
         return res.json(myUser)
     }
     //function use to update current user

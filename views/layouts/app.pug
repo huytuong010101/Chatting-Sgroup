@@ -7,6 +7,7 @@ head
   link(rel='icon' href='dist/images/favicon.png' type='image/png')
   link(rel='stylesheet' href='dist/css/soho.min.css')
   link(rel='stylesheet' href='dist/css/style.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css')
 
 body
   // disconnected modal
@@ -52,6 +53,9 @@ body
   script(src='/dist/js/handleFriend.js')
   script(src='/dist/js/loadInfo.js')
   script(src='dist/js/examples.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js')
+  script(src='/socket.io/socket.io.js')
+  script(src='dist/js/handleMessage.js')
 
   img.loading-img#loading-img(src="https://www.upsieutoc.com/images/2020/06/29/Webp.net-gifmaker.gif")
   #ascrail2000.nicescroll-rails.nicescroll-rails-vr(style='width: 4px; z-index: auto; cursor: default; position: absolute; top: 530.797px; left: 1354px; height: 72px; display: none; opacity: 0;')

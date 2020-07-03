@@ -100,7 +100,7 @@ const deleteRequest = (event) => {
                 loadAllRequest();
                 loadAllFriend();
             } else {
-                swal("Error", "SOmething were wrong", "error");
+                swal("Error", "Something were wrong", "error");
             }
         }
     })

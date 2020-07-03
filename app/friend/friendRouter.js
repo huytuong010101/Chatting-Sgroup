@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import FriendController from './friendController.js';
-import AuthMiddleware from '../middlewares/authenticationMiddleware.js';
+import AuthMiddleware from '../../middlewares/authenticationMiddleware.js';
 
 const friendController = new FriendController;
 const authMiddleware = new AuthMiddleware;

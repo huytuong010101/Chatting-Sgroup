@@ -1,8 +1,8 @@
-import { firebase, admin } from "../../firebase/fbConfig.js";
-import User from "../user/userModel.js"
+import { firebase, admin } from "../firebase/fbConfig.js";
+import User from "../app/user/userRepository.js"
 import validator from 'validator';
 import jwtDecode from 'jwt-decode';
-import Users from "../user/userModel.js";
+import Users from "../app/user/userRepository.js";
 
 const users = new Users;
 
@@ -26,6 +26,9 @@ export default class ValidateData {
                     hasError = true
                 }
             }
+        } else {
+            errors.email.push("Email is require")
+            hasError = true
         }
         //validate phone
         errors.phone = []

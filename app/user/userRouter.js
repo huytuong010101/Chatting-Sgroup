@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import AuthMiddleware from '../middlewares/authenticationMiddleware.js';
+import AuthMiddleware from '../../middlewares/authenticationMiddleware.js';
 import multer from 'multer';
 import UserController from "./userController.js"
-import DataValidator from "../middlewares/validateData.js"
+import DataValidator from "../../middlewares/validateData.js"
 
 const upload = multer({ dest: 'public/avatar' });
 const userController = new UserController;

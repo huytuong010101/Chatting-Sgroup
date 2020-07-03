@@ -1,8 +1,8 @@
 import knex from "../../database/pgConfig.js";
 import { firebase, admin } from "../../firebase/fbConfig.js";
 import jwtDecode from 'jwt-decode';
-import Friend from "./friendModel.js"
-import User from "../user/userModel.js"
+import Friend from "./friendRepository.js"
+import User from "../user/userRepository.js"
 
 const friends = new Friend;
 const users = new User;
@@ -51,15 +51,12 @@ export default class FriendController {
     async getFriendRequests(req, res) {
         const user = jwtDecode(req.headers.token);
         const requestList = await friends.allRequestOf(user.user_id)
-        console.log("all friend request")
-        console.log(requestList)
         return res.json(requestList)
     }
     //get all friends
     async getAllFriends(req, res) {
         const user = jwtDecode(req.headers.token);
         let friendList = await friends.allFriendsOf(user.user_id)
-        console.log(friendList)
         return res.json(friendList)
     }
     //accept friend request

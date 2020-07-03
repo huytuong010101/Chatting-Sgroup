@@ -3,7 +3,7 @@ import { firebase, admin } from "../../firebase/fbConfig.js";
 import bcrypt from 'bcrypt';
 const saltRounds = 10;
 import jwtDecode from 'jwt-decode';
-import Users from "../user/userModel.js"
+import Users from "../user/userRepository.js"
 
 const user = new Users;
 
