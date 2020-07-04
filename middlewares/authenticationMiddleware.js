@@ -40,10 +40,10 @@ export default class AuthMiddleware {
             await admin.auth().verifyIdToken(req.headers.token);
         } catch (e) {
             console.log("Wrong token--")
-            console.log(e)
+            console.log(e.code)
             return res.json({
                 result: "not OK",
-                error: "Lỗi xác thực",
+                error: e.code,
             })
         }
         return next()

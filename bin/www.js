@@ -9,6 +9,7 @@ import d from 'debug';
 const debug = d('chatting:server')
 import http from 'http';
 import dotenv from "dotenv"
+import connectionEvent from "../socketio/connectionEvent.js"
 import _io from "socket.io"
 dotenv.config()
 
@@ -28,17 +29,7 @@ const server = http.createServer(app);
  * CREATE SOCKET SERVER 
  */
 const io = _io(server)
-io.on('connection', (socket) => {
-  console.log('---------------------------a user connected--------------------------');
-  //receiver msg
-  socket.on("clientSendNewMsg", (msg) => {
-    console.log(msg)
-    socket.broadcast.emit("serverSendMsg", msg);
-  })
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
+io.on('connection', connectionEvent);
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -7,7 +7,12 @@ const loadMyProfile = () => {
         headers: {
             token: localStorage.getItem("authToken"),
         },
-        success: (response) => {
+        success: async (response) => {
+            if (response.result == "not OK") {
+                await swal("Opps", "Your session is expire. You must login again", "warning")
+                localStorage.setItem("authToken", "")
+                window.location.href = "/auth/login-email"
+            }
             $("#fullname").val(response.fullname)
             $("#avatar").attr("src", response.avatar)
             $("#phone").val(response.phone ? response.phone : "")

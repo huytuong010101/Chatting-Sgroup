@@ -1,6 +1,7 @@
 const socket = io("http://localhost:8000");
 socket.on("connect", () => {
-    console.log("connected to server")
+    console.log("socket connected to server")
+    socket.emit("registerUser", { "token": "123" })
 })
 socket.on("serverSendMsg", (msg) => {
     const type = ""
