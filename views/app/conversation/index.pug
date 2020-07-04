@@ -17,9 +17,9 @@ block content
     .chat-header
       .chat-header-user
         figure.avatar.avatar-lg
-          img.rounded-circle(src='dist/images/man_avatar3.jpg')
+          img.rounded-circle#currentChattingAvatar(src='dist/images/man_avatar3.jpg')
         div
-          h5 Karl Hubane
+          h5#currentChattingName ---
           small.text-muted
             i Online
       .chat-header-action
@@ -50,6 +50,7 @@ block content
     .chat-footer
       form#messageFrom(action='')
         input.form-control#messageContent(type='text' placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby='button-addon2')
+        input#receiverId(type='hidden')
         .form-buttons
           button.btn.btn-light.btn-floating(type='button')
             i.fa.fa-paperclip

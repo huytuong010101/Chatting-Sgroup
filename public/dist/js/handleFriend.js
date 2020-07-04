@@ -29,7 +29,7 @@ const loadAllFriend = () => {
         success: (response) => {
             $("#list-friend").html("");
             response.forEach(item => {
-                let str = `<li class="list-group-item"><div><figure class="avatar"><img class="rounded-circle" src="${item.avatar}"></figure></div><div class="users-list-body"><h5>${item.fullname}</h5><p>${item.description}</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-142px, 22px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" href="#">Open</a><a class="dropdown-item" data-id="${item.userB}" onclick="getProfile(event)" data-navigation-target="contact-information">Profile</a><a class="dropdown-item" data-id="${item.userB}" onclick="unfriend(event)">Unfriend</a></div></div></div></div></li>`
+                let str = `<li class="list-group-item"><div><figure class="avatar"><img class="rounded-circle" src="${item.avatar}"></figure></div><div class="users-list-body"><h5>${item.fullname}</h5><p>${item.description}</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-142px, 22px, 0px); top: 0px; left: 0px; will-change: transform;"><a class="dropdown-item" data-id="${item.userB}" onclick="startChattingWith(event)">Open</a><a class="dropdown-item" data-id="${item.userB}" onclick="getProfile(event)" data-navigation-target="contact-information">Profile</a><a class="dropdown-item" data-id="${item.userB}" onclick="unfriend(event)">Unfriend</a></div></div></div></div></li>`
                 $("#list-friend").append(str)
             });
             if (response.length == 0) $("#list-friend").append("<h6 class='text-warning text-center'>You have no friend</h6>")
@@ -150,5 +150,27 @@ const getProfile = (event) => {
         }
     })
 
+}
+
+const chooseToChat = (id) => {
+    $.ajax({
+        type: "GET",
+        url: "/friend/get-profile-of-friend",
+        headers: {
+            token: localStorage.getItem("authToken"),
+        },
+        data: {
+            id: id,
+        },
+        success: (response) => {
+            $("#currentChattingAvatar").attr("src", response.avatar)
+            $("#currentChattingName").text(response.fullname)
+            $("#receiverId").val(response.uid)
+        }
+    })
+}
+
+const startChattingWith = (e) => {
+    chooseToChat(event.target.dataset.id)
 }
 
