@@ -6,11 +6,11 @@ socket.on("connect", () => {
 })
 //reeceive msg from server
 socket.on("serverSendMsg", (response) => {
-    if ($("#receiverId").val() == response.sender) {
+    if ($("#receiverId").val() == response.senderId) {
         ChatosExamle.Message.add(response.msg, '');
     } else {
-        const htmlSeeMsg = '<br><br><a data-id="' + response.sender + '" onclick="startChattingWith(event)">See more</a>'
-        toastr.info(response.msg + htmlSeeMsg, "Tin nhắn mới")
+        const htmlSeeMsg = `<br><br><a data-id="${response.senderId}" onclick="startChattingWith(event)">See more</a>`
+        toastr.info(response.senderName + ": " + response.msg + htmlSeeMsg, "Tin nhắn mới")
     }
 
 })

@@ -11,8 +11,6 @@ import http from 'http';
 import dotenv from "dotenv"
 import connectionEvent from "../socketio/connectionEvent.js"
 import _io from "socket.io"
-import { admin } from "../firebase/fbConfig.js";
-import jwtDecode from 'jwt-decode';
 dotenv.config()
 
 /**
@@ -31,33 +29,7 @@ const server = http.createServer(app);
  * CREATE SOCKET SERVER 
  */
 const io = _io(server)
-io.on('connection', (socket) => {
-  console.log('new user with id:', socket.id);
-  //receiver msg
-  socket.on("clientSendNewMsg", (request) => {
-    console.log(socket.userId, " sent to  ", request.receiver, ": ", request.msg, "-mode:", request.mode)
-    io.sockets.in(request.receiver).emit("serverSendMsg", {
-      sender: socket.userId,
-      mode: request.mode,
-      msg: request.msg,
-    });
-  })
-  //validate connection
-  socket.on("registerUser", async (msg) => {
-    try {
-      await admin.auth().verifyIdToken(msg.token);
-      const user = jwtDecode(msg.token);
-      socket.userId = user.user_id;
-      socket.join(user.user_id);
-    } catch (e) {
-      console.log("Can't register user with socket because of wrong token")
-    }
-  })
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-    socket.leave(socket.userId)
-  });
-});
+io.on('connection', connectionEvent);
 /**
  * Listen on provided port, on all network interfaces.
  */
