@@ -1,8 +1,10 @@
 import { admin } from "../firebase/fbConfig.js";
 import jwtDecode from 'jwt-decode';
+import Message from "../app/mesage/messageRepository.js"
+const message = new Message()
 
 const connectionEvent = (socket) => {
-    console.log('new user with id:', socket.id);
+    console.log('new connection with id:', socket.id);
     //receiver msg
     socket.on("clientSendNewMsg", (request) => {
         console.log(socket.userName, " sent to  ", request.receiver, ": ", request.msg, "-mode:", request.mode)
@@ -12,6 +14,12 @@ const connectionEvent = (socket) => {
             mode: request.mode,
             msg: request.msg,
         });
+        message.newMessage({
+            mode: request.mode,
+            senderId: socket.userId,
+            receiverId: request.receiver,
+            content: request.msg,
+        })
     })
     //validate connection
     socket.on("registerUser", async (msg) => {
@@ -27,7 +35,7 @@ const connectionEvent = (socket) => {
         }
     })
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log(`${socket.userName} has disconnected`);
         socket.leave(socket.userId)
     });
 }

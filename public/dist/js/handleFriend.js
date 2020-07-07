@@ -152,7 +152,35 @@ const getProfile = (event) => {
 
 }
 
-const chooseToChat = (id) => {
+const loadSMS = (id) => {
+    $.ajax({
+        type: "GET",
+        url: "/sms/get-message",
+        headers: {
+            token: localStorage.getItem("authToken"),
+        },
+        data: {
+            id: id,
+            mode: 0,
+        },
+        success: (response) => {
+            console.log(response.message)
+            if (response.result == "OK") {
+                for (let i = 0; i < response.message.length; i++) {
+                    let item = response.message[i]
+                    console.log(item)
+                    if (item.relationship == 0) {
+                        ChatosExamle.Message.add(item.body, 'outgoing-message');
+                    } else {
+                        ChatosExamle.Message.add(item.body, '');
+                    }
+                };
+            }
+        }
+    })
+}
+
+const loadProfileCurrentChatting = (id) => {
     $.ajax({
         type: "GET",
         url: "/friend/get-profile-of-friend",
@@ -171,6 +199,9 @@ const chooseToChat = (id) => {
 }
 
 const startChattingWith = (e) => {
-    chooseToChat(event.target.dataset.id)
+    loadProfileCurrentChatting(event.target.dataset.id)
+    loadSMS(event.target.dataset.id)
 }
+
+
 

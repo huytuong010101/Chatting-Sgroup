@@ -28,4 +28,7 @@ $("#messageFrom").submit((e) => {
     ChatosExamle.Message.add(msg, 'outgoing-message');
     return false;
 })
+//test get sms
+
+
 

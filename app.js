@@ -13,6 +13,7 @@ import authRouter from './app/authentication/authenticationRouter.js';
 import indexRouter from './routes/indexRouter.js';
 import friendRouter from './app/friend/friendRouter.js';
 import userRouter from './app/user/userRouter.js';
+import messageRouter from './app/mesage/messageRouter.js'
 // overide method
 // override with different headers; last one takes precedence
 app.use(methodOverride('X-HTTP-Method')); //          Microsoft
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/auth', authRouter);
 app.use('/friend', friendRouter);
 app.use('/user', userRouter);
+app.use('/sms', messageRouter);
 app.use('', indexRouter);
 
 // catch 404 and forward to error handler
