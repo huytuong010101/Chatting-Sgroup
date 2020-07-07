@@ -8,6 +8,7 @@ const ChatosExamle = {
                 message = message ? message : '--error--';
 
                 $('.layout .content .chat .chat-body .messages').append('<div class="message-item ' + type + '"><div class="message-content">' + message + '</div><div class="message-action">PM 14:25 ' + (type ? '<i class="ti-check"></i>' : '') + '</div></div>');
+                $("#chat-body").animate({ scrollTop: $("#messsages").height() }, 100);
                 /*
                 chat_body.scrollTop(chat_body.get(0).scrollHeight, -1).niceScroll({
                     cursorcolor: 'rgba(66, 66, 66, 0.20)',

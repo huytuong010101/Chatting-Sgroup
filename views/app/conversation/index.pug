@@ -39,14 +39,14 @@ block content
               a.dropdown-item(href='#') Delete
               .dropdown-divider
               a.dropdown-item(href='#') Block
-    .chat-body(tabindex='2' style='overflow: hidden; outline: none;')
+    .chat-body#chat-body(tabindex='2' style='outline: none;')
       // .no-message
       //
         <div class="no-message-container">
         <i class="fa fa-comments-o"></i>
         <p>Select a chat to read messages</p>
         </div>
-      .messages
+      .messages#messsages
     .chat-footer
       form#messageFrom(action='')
         input.form-control#messageContent(type='text' placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby='button-addon2')
