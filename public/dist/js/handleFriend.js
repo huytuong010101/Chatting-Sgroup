@@ -153,6 +153,7 @@ const getProfile = (event) => {
 }
 
 const loadSMS = (id) => {
+    $('.layout .content .chat .chat-body .messages').html("")
     $.ajax({
         type: "GET",
         url: "/sms/get-message",
@@ -168,7 +169,6 @@ const loadSMS = (id) => {
             if (response.result == "OK") {
                 for (let i = 0; i < response.message.length; i++) {
                     let item = response.message[i]
-                    console.log(item)
                     if (item.relationship == 0) {
                         ChatosExamle.Message.add(item.body, 'outgoing-message');
                     } else {
@@ -199,6 +199,7 @@ const loadProfileCurrentChatting = (id) => {
 }
 
 const startChattingWith = (e) => {
+    console.log(event.target.dataset.id)
     loadProfileCurrentChatting(event.target.dataset.id)
     loadSMS(event.target.dataset.id)
 }

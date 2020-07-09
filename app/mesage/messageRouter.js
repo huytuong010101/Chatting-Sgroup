@@ -9,6 +9,8 @@ const authMiddleware = new AuthMiddleware
 
 router.route("/get-message")
     .get(authMiddleware.verifyToken, messageController.getMessage)
+router.route("/get-message-history")
+    .get(authMiddleware.verifyToken, messageController.getMessageHistory)
 
 
 export default router;

@@ -107,4 +107,24 @@ $(document).ready(() => {
             URL.revokeObjectURL(document.getElementById("avatar").src) // free memory
         }
     })
+    //load sms history
+    const loadOldSms = () => {
+        $.ajax({
+            type: "GET",
+            url: "/sms/get-message-history",
+            headers: {
+                token: localStorage.getItem("authToken"),
+            },
+            success: (response) => {
+                if (response.result == "OK") {
+                    console.log("history", response)
+                    response.message.forEach(async item => {
+                        $("#chatHistory").append(`<li data-id="${item.info.uid}" onclick="startChattingWith(event)" class="list-group-item"><div><figure class="avatar"><img class="rounded-circle" src="${item.info.avatar}"></figure></div><div class="users-list-body"><h5>${item.info.fullname}</h5><p>${item.relationship == 0 ? "Sent: " : "Received: "}${item.message}</p><div class="users-list-action action-toggle"><div class="dropdown"><a data-toggle="dropdown" href="#"><i class="ti-more"></i></a><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item active" data-id="${item.info.uid}" onclick="startChattingWith(event)"  data-navigation-target="contact-information">Profile</a><a class="dropdown-item" href="#">Add to archive</a><a data-id="${item.info.uid}" class="dropdown-item" href="#">Delete</a></div></div></div></div></li>`)
+                    })
+                }
+            }
+
+        })
+    }
+    loadOldSms()
 })
